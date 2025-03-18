@@ -1,0 +1,124 @@
+import React, { useState } from 'react';
+import {
+    Container,
+    TextField,
+    Button,
+    Typography,
+    MenuItem,
+    Grid,
+    Paper,
+} from '@mui/material';
+
+function AppointmentPage() {
+    const [userData, setUserData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        measurements: {
+            chest: '',
+            waist: '',
+            hips: '',
+            length: '',
+        },
+        style: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name in userData.measurements) {
+            setUserData(prev => ({
+                ...prev,
+                measurements: {
+                    ...prev.measurements,
+                    [name]: value,
+                },
+            }));
+        } else {
+            setUserData(prev => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(userData);
+        // Submit data logic here
+    };
+
+    return (
+        <Container component="main" maxWidth="sm">
+            <Paper elevation={3} style={{ padding: '20px' }}>
+                <Typography variant="h4" align="center">Book Appointment</Typography>
+                <form onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="name"
+                                label="Your Name"
+                                variant="outlined"
+                                value={userData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="email"
+                                label="Your Email"
+                                type="email"
+                                variant="outlined"
+                                value={userData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="phone"
+                                label="Your Phone Number"
+                                type="tel"
+                                variant="outlined"
+                                value={userData.phone}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                  
+                        <Grid item xs={12}>
+                            <TextField
+                                select
+                                fullWidth
+                                name="style"
+                                label="Choose Your Style"
+                                variant="outlined"
+                                value={userData.style}
+                                onChange={handleChange}
+                                required
+                            >
+                                <MenuItem value="">
+                                    <em>Select a style</em>
+                                </MenuItem>
+                                <MenuItem value="casual">Casual</MenuItem>
+                                <MenuItem value="formal">Formal</MenuItem>
+                                <MenuItem value="sporty">Sporty</MenuItem>
+                                <MenuItem value="elegant">Elegant</MenuItem>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button fullWidth variant="contained" color="primary" type="submit">
+                                Submit Appointment
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Paper>
+        </Container>
+    );
+};
+
+export default AppointmentPage;
